@@ -1,6 +1,7 @@
 # Local DNS tests, DNS comparisson and more
-on some countries like Venezuela, big tech giants do not have any presence, so the common solution of using Public DNS do no apply because of high latency issues (>50/60ms).
-so there is some help to find ISP providing local DNS services, that repo helps you to find the best ISP providing reliable and fast service that you can get.
+on some countries like Venezuela, big tech giants do not have any presence, so the common solution of using Public DNS (Cloudflare 1.1.1.1, 1.0.0.1, Google 8.8.8.8, 8.8.4.4) do no apply because of high latency issues (>50/60ms).
+
+Here are some help to find ISP providing local DNS services to find the best ISP providing reliable and fast service that you can get.
 
 ## Compare DNSs around you
 
@@ -29,8 +30,7 @@ chmod +x test_dns.sh
 
 Check for ./graph/README.md for more instructions.
 
-![plot](./graph/ip_milliseconds_chart.png)
-~                                                        
+![plot](./graph/ip_milliseconds_chart.png)                       
 
 ## Looking for a suspect failing DNS server
 
@@ -39,12 +39,12 @@ Check for ./graph/README.md for more instructions.
 ping -c 50 8.8.8.8
 `
 ### Manual test first with publick well known DNS servers:
-`
+```
 dig @8.8.8.8 www.google.com | grep time
 dig @1.1.1.1 www.google.com | grep time
 dig @1.0.0.1 www.google.com | grep time
 dig @9.9.9.9 www.google.com | grep time
-`
+```
 #### Test via TCP
 `
 dig +tcp @8.8.8.8 www.google.com
@@ -55,11 +55,11 @@ for i in {1..10}; do dig @207.138.36.249 www.google.com & done
 wait
 `
 #### Test different Query Types
-`
+```
 dig @207.138.36.249 www.google.com A
 dig @207.138.36.249 www.google.com AAAA
 dig @207.138.36.249 www.google.com ANY
-`
+```
 #### Avoid rate limiting while manually testing
 `while true; do dig @207.138.36.249 www.google.com | grep time; sleep 5; done`
 
@@ -78,8 +78,7 @@ resolvectl status
 `
 
 Check if you are using you trash modem-router for DNS resolution, check for something like:
-
-`
+```
 Global
          Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
   resolv.conf mode: stub
@@ -90,18 +89,16 @@ Link 2 (eno1)
 Current DNS Server: 192.168.6.1
        DNS Servers: 192.168.6.1
         DNS Domain: hikvisionwifi.local
-`
+```
 
 #### Check your internet connection speed
-curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -
+`curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -`
 
 
 #### Check your PC for network congestion
-
 `netstat -antup | grep ESTABLISHED`
 
 #### Check your WiFi strenght
-
 check for lower values -70 dBm:
 
 `iwconfig wlo1`
@@ -110,8 +107,8 @@ check for lower values -70 dBm:
 `sudo nano /etc/systemd/resolved.conf`
 
 a common approach is to set-up the Cloudflare DNS, or search-test for the best with the script on this repo
-`
+```
 [Resolve]
 DNS=1.1.1.1 9.9.9.9
 FallbackDNS=8.8.8.8
-`
+```
