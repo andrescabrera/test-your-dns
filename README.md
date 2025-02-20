@@ -1,4 +1,36 @@
-# Support repo: local DNS tests, DNS comparisson and more
+# Local DNS tests, DNS comparisson and more
+on some countries like Venezuela, big tech giants do not have any presence, so the common solution of using Public DNS do no apply because of high latency issues (>50/60ms).
+so there is some help to find ISP providing local DNS services, that repo helps you to find the best ISP providing reliable and fast service that you can get.
+
+## Compare DNSs around you
+
+#### Run test_dns.sh
+
+Go to the web and take the DNS list around you, then:
+
+1- Take the full list of IPs of DNS around you:
+https://publicdnsserver.com/venezuela/#listnegoro
+
+2- download the IP list from the link on the page, in that case:
+https://publicdnsserver.com/download/venezuela.txt
+
+3- Enrich the list with ASN, carrier and Reliablity info from:
+https://public-dns.info/nameserver/ve.html
+
+4 - Edit the test_dns script with the data, then run it to generate the json:
+`
+chmod +x test_dns.sh
+./test_dns.sh dns_list.txt
+`
+
+5- Best DNS around you is shown. You can also check the results.csv with detailed results.
+
+6- You can grab the screen with the list as shown IP,MS and graph it with the support script on ./graph, just modified the script a litle.
+
+Check for ./graph/README.md for more instructions.
+
+![plot](./graph/ip_milliseconds_chart.png)
+~                                                        
 
 ## Looking for a suspect failing DNS server
 
@@ -83,32 +115,3 @@ a common approach is to set-up the Cloudflare DNS, or search-test for the best w
 DNS=1.1.1.1 9.9.9.9
 FallbackDNS=8.8.8.8
 `
-
-## Compare DNSs around you
-
-#### Run test_dns.sh
-
-Go to the web and take the DNS list around you, then:
-
-1- Take the full list of IPs of DNS around you:
-https://publicdnsserver.com/venezuela/#listnegoro
-
-2- download the IP list from the link on the page, in that case:
-https://publicdnsserver.com/download/venezuela.txt
-
-3- Enrich the list with ASN, carrier and Reliablity info from:
-https://public-dns.info/nameserver/ve.html
-
-4 - Edit the test_dns script with the data, then run it to generate the json:
-`
-chmod +x test_dns.sh
-./test_dns.sh dns_list.txt
-`
-
-5- Best DNS around you is shown. You can also check the results.csv with detailed results.
-
-6- You can grab the screen with the list as shown IP,MS and graph it with the support script on ./graph, just modified the script a litle.
-
-Check for ./graph/README.md for more instructions.
-
-![plot](./graph/visualization.png)
